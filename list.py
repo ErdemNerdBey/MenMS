@@ -1,30 +1,41 @@
 import random
+MenMs = ['oranje', 'blauw', 'groen', 'bruin']
+zak = []
+zakDict = {'oranje': 0, 'blauw': 0,'groen': 0, 'bruin':0,}
+hoeveelkleuren = 0
 
-kleuren = ["oranje" , "blauw" , "groen" , "bruin"]
-zakMenMs = list()
-aantalMenMs = 0
 
-
-def vulzak():
+def randomkleur():
+    global hoeveelkleuren
+    f = True
+    while f:
         try:
-            global aantalMenMs
-            aantalMenMs = int(input(f"Hoeveel M&M's wilt u?\n"))
-            if int(aantalMenMs) < 0:
-                print("Kies een hogere getal dan 0.")
-                vulzak(1)
-            else:
-                for i in range(aantalMenMs):
-                    randomKleur = random.choices(kleuren)
-                    zakMenMs.append(randomKleur)
+            hoeveelkleuren = int(input("Hoeveel M&M's moeten er aan deze zak worden toegevoegd?\n"))
+            if int(hoeveelkleuren) <= 0:
+                print('Dat is geen getal boven nul!')
         except ValueError:
-            print("Dit is geen geldige invoer.\nVoer een hele getal in")
-            vulzak()
-    
+            print('Dat is geen geldige invoer!')
+        if hoeveelkleuren > 0:
+            f = False
 
-vulzak()
+    for i in range(hoeveelkleuren):
+        global getal
+        getal = random.choice(range(0, 4))
+        kleur = MenMs[getal]
+        zak.append(kleur)
+        if kleur == 'oranje':
+            zakDict['oranje'] += 1
+        elif kleur == 'blauw':
+            zakDict['blauw'] += 1
+        elif kleur == 'groen':
+            zakDict['groen'] += 1
+        elif kleur == 'bruin':
+            zakDict['bruin'] += 1
 
-print(zakMenMs)
-if len(zakMenMs) == 0:
-    print(f"u heeft {len(zakMenMs)} M&M's in uw zak.\nDat is wel een hele kleine zak!!")
-else:
-    print(f"u heeft {len(zakMenMs)} M&M's in uw zak")
+
+randomkleur()
+
+print(zak)
+for key, value in zakDict.items():
+    print(key, value)
+print(len(zak))
